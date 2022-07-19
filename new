@@ -1,0 +1,53 @@
+select name,usn,branch_name
+from branch,student
+where branch_name='mca' and student.branch_id =branch.branch_id;
+
+
+
+select name,usn,branch_name 
+from student  s, branch b 
+where b.branch_id=s.branch_id and b.branch_name='mca';
+
+ select distinct branch_id  from branch;
+ 
+ select all branch_id  from branch;
+ 
+ select * from author where country like "%nd%";
+ 
+ 
+select * from author where age between 40 and 50;
+
+
+select usn,name
+from student,book
+where book.usn=student.usn;
+
+
+2.select distinct  name  from student,borrow where student.usn not in(select usn from borrow);
+
+
+3.select student.usn,name,branch_name,book_name,author_name,borrow_date
+from book ,student ,author ,branch ,borrow 
+where student.usn=borrow.usn and
+student.branch_id=branch.branch_id and
+borrow.book_id=book.book_id and 
+book.author_id=author.author_id and
+ student.sem=1 and branch.branch_name="mca";
+
+5.select * from student 
+where usn in(select usn from borrow group by usn having count(usn)>=2);
+
+
+
+4.select b.author_id,author_name,count(*) from book b,author a where b.author_id=a.author_id group by b.author_id;
+
+
+select count(Author_name),book_name
+from book,author;
+
+
+
+select count(a.author_id),a.author_name ,b.book_name from author a, book b where  a.author_id=b.author_id and a.author_id in( select a.author_id
+from author);
+
+

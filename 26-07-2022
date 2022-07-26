@@ -1,0 +1,132 @@
+CREATE TABLE student1
+(usn varchar(20) primary key,
+name char(10),
+date_of_birth char(10),
+branch char(10), 
+mark1 float(5,2),
+mark2 float(5,2),
+mark3 float(5,2),
+total float(5,2),
+gpa float(5,3));
+
+mysql> desc student1;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| usn           | varchar(20) | NO   | PRI | NULL    |       |
+| name          | char(10)    | YES  |     | NULL    |       |
+| date_of_birth | char(10)    | YES  |     | NULL    |       |
+| branch        | char(10)    | YES  |     | NULL    |       |
+| mark1         | float(5,2)  | YES  |     | NULL    |       |
+| mark2         | float(5,2)  | YES  |     | NULL    |       |
+| mark3         | float(5,2)  | YES  |     | NULL    |       |
+| total         | float(5,3)  | YES  |     | NULL    |       |
+| gpa           | float(5,3)  | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+
+
+
+insert into student1  (usn,name,date_of_birth,branch,mark1,mark2,mark3) 
+values('4VP21MC010','ANU','2000-05-3','MCA',70,89,90);
+
+insert into student1  (usn,name,date_of_birth,branch,mark1,mark2,mark3) 
+values('4VP21MC013','DHANYA','2000-07-13','MCA', 89,76,87);
+
+insert into student1  (usn,name,date_of_birth,branch,mark1,mark2,mark3) 
+values('4VP21MB010','ANAGHA','2000-08-23','MBA',70,65,55);
+
+insert into student1  (usn,name,date_of_birth,branch,mark1,mark2,mark3) 
+values('4VP21MB016','AVANI','2000-04-28','MBA',89,54,68);
+
+insert into student1  (usn,name,date_of_birth,branch,mark1,mark2,mark3) 
+values('4VP21MCS021','THRUPTHI','2000-05-3','CS',54,67,78);
+
+
+mysql> select * from student1;
++-------------+----------+---------------+--------+-------+-------+-------+-------+------+
+| usn         | name     | date_of_birth | branch | mark1 | mark2 | mark3 | total | gpa  |
++-------------+----------+---------------+--------+-------+-------+-------+-------+------+
+| 4VP21MB010  | ANAGHA   | 2000-08-23    | MBA    | 70.00 | 65.00 | 55.00 |  NULL | NULL |
+| 4VP21MB016  | AVANI    | 2000-04-28    | MBA    | 89.00 | 54.00 | 68.00 |  NULL | NULL |
+| 4VP21MC010  | ANU      | 2000-05-3     | MCA    | 70.00 | 89.00 | 90.00 |  NULL | NULL |
+| 4VP21MC013  | DHANYA   | 2000-07-13    | MCA    | 89.00 | 76.00 | 87.00 |  NULL | NULL |
+| 4VP21MCS021 | THRUPTHI | 2000-05-3     | CS     | 54.00 | 67.00 | 78.00 |  NULL | NULL |
++-------------+----------+---------------+--------+-------+-------+-------+-------+------+
+
+i)
+update student1
+set total=mark1+mark2+mark3;
+
+
+ii
+update student1 set gpa=(total/3);
+
+
+iii)
+select usn,branch,date_of_birth 
+from student1
+ where date_of_birth between '2000-01-1' and '2000-05-01';
++------------+--------+---------------+
+| usn        | branch | date_of_birth |
++------------+--------+---------------+
+| 4VP21MB016 | MBA    | 2000-04-28    |
++------------+--------+---------------+
+
+iv)
+select * 
+from student1
+where branch='MCA';
+
++------------+--------+---------------+--------+-------+-------+-------+--------+-------+
+| usn        | name   | date_of_birth | branch | mark1 | mark2 | mark3 | total  | gpa   |
++------------+--------+---------------+--------+-------+-------+-------+--------+-------+
+| 4VP21MC010 | ANU    | 2000-05-3     | MCA    | 70.00 | 89.00 | 90.00 | 249.00 | 83.00 |
+| 4VP21MC013 | DHANYA | 2000-07-13    | MCA    | 89.00 | 76.00 | 87.00 | 252.00 | 84.00 |
++------------+--------+---------------+--------+-------+-------+-------+--------+-------+
+
+v)
+
+select max(gpa),branch   
+from student1 
+ group by branch;
++----------+--------+
+| max(gpa) | branch |
++----------+--------+
+|    70.33 | MBA    |
+|    84.00 | MCA    |
+|    66.33 | CS     |
++----------+--------+
+
+vi)
+select *
+from student1
+where name like 'a%';
+
++------------+--------+---------------+--------+-------+-------+-------+--------+-------+
+| usn        | name   | date_of_birth | branch | mark1 | mark2 | mark3 | total  | gpa   |
++------------+--------+---------------+--------+-------+-------+-------+--------+-------+
+| 4VP21MB010 | ANAGHA | 2000-08-23    | MBA    | 70.00 | 65.00 | 55.00 | 190.00 | 63.33 |
+| 4VP21MB016 | AVANI  | 2000-04-28    | MBA    | 89.00 | 54.00 | 68.00 | 211.00 | 70.33 |
+| 4VP21MC010 | ANU    | 2000-05-3     | MCA    | 70.00 | 89.00 | 90.00 | 249.00 | 83.00 |
++------------+--------+---------------+--------+-------+-------+-------+--------+-------+
+
+vii)
+select * from student1 where name like '%ya';
++------------+--------+---------------+--------+-------+-------+-------+--------+-------+
+| usn        | name   | date_of_birth | branch | mark1 | mark2 | mark3 | total  | gpa   |
++------------+--------+---------------+--------+-------+-------+-------+--------+-------+
+| 4VP21MC013 | DHANYA | 2000-07-13    | MCA    | 89.00 | 76.00 | 87.00 | 252.00 | 84.00 |
++------------+--------+---------------+--------+-------+-------+-------+--------+-------+
+
+viii)
+DELETE FROM student1
+where usn='4VP21MB016';
+
+select * 
+from student 
+where ( select b.book_id,b.book_name
+
+
+select * from student s
+where exists (select br.usn , publisher from borrow br,book bk where br.book_id=bk.book_id and br.usn=s.usn group by publisher having count(distinct author_id)>1);
+

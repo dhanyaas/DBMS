@@ -1,0 +1,152 @@
+
+
+desc team;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| teamid   | varchar(10) | NO   | PRI | NULL    |       |
+| teamname | varchar(20) | YES  |     | NULL    |       |
+| city     | varchar(20) | YES  |     | NULL    |       |
+| coach    | varchar(20) | YES  |     | NULL    |       |
+| caption  | varchar(20) | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+
+desc player;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| playerid   | varchar(20) | NO   | PRI | NULL    |       |
+| plyaername | varchar(20) | YES  |     | NULL    |       |
+| contact    | varchar(20) | YES  |     | NULL    |       |
+| age        | varchar(20) | YES  |     | NULL    |       |
+| teamid     | varchar(10) | YES  | MUL | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+desc match1;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| matchid   | varchar(20) | NO   | PRI | NULL    |       |
+| teamid1   | varchar(10) | YES  | MUL | NULL    |       |
+| teamid2   | varchar(10) | YES  | MUL | NULL    |       |
+| sdate     | date        | YES  |     | NULL    |       |
+| stime     | time        | YES  |     | NULL    |       |
+| stadiumid | varchar(20) | YES  | MUL | NULL    |       |
+| winnerid  | varchar(20) | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+
+desc stadium;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| stadiumid | varchar(20) | NO   | PRI | NULL    |       |
+| sname     | varchar(20) | YES  |     | NULL    |       |
+| city      | varchar(20) | YES  |     | NULL    |       |
+| areaname  | varchar(20) | YES  |     | NULL    |       |
+| pincode   | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+
+mysql> desc manofmatch;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| playerid | varchar(20) | NO   | PRI | NULL    |       |
+| matchid  | varchar(20) | NO   | PRI | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+
+
+select * from team;
++--------+----------+----------+---------+---------+
+| teamid | teamname | city     | coach   | caption |
++--------+----------+----------+---------+---------+
+| t01    | csk      | chennai  | dhoni   | p02     |
+| t02    | rcb      | banglore | virat   | p02     |
+| t03    | Mi       | mumbai   | sachin  | p02     |
+| t04    | kkr      | kolkatta | gowtham | p04     |
+| t05    | gt       | gujarat  | robin   | p05     |
++--------+----------+----------+---------+---------+
+
+
+ select * from player;
++----------+------------+------------+------+--------+
+| playerid | plyaername | contact    | age  | teamid |
++----------+------------+------------+------+--------+
+| p01      | abhi       | 8967542310 | 45   | t01    |
+| p02      | yathish    | 7965542310 | 38   | t01    |
+| p03      | athesh     | 9967562310 | 46   | t04    |
+| p04      | neeraj     | 7967542316 | 33   | t02    |
+| p05      | manoj      | 8967552317 | 76   | t03    |
+| p06      | rajath     | 667552317  | 21   | t02    |
+| p07      | ajith      | 7867552317 | 43   | t03    |
++----------+------------+------------+------+--------+
+
+
+select * from match1;
++---------+---------+---------+------------+----------+-----------+----------+
+| matchid | teamid1 | teamid2 | sdate      | stime    | stadiumid | winnerid |
++---------+---------+---------+------------+----------+-----------+----------+
+| m01     | t01     | t02     | 2022-04-22 | 00:00:05 | s02       | t01      |
+| m02     | t01     | t03     | 2022-04-21 | 00:00:08 | s03       | t03      |
+| m03     | t01     | t02     | 2021-04-18 | 00:00:01 | s02       | t01      |
+| m04     | t03     | t04     | 2022-04-22 | 00:00:06 | s03       | t01      |
+| m05     | t01     | t03     | 2022-03-31 | 00:00:07 | s02       | t03      |
++---------+---------+---------+------------+----------+-----------+----------+
+
+
+select * from stadium;
++-----------+---------------------+------------+-------------+---------+
+| stadiumid | sname               | city       | areaname    | pincode |
++-----------+---------------------+------------+-------------+---------+
+| s01       | kantirava           | banglore   | rrnagara    | 34567   |
+| s02       | narendramodistadium | gujarat    | gadhinagara | 44567   |
+| s03       | bendre              | shivamogga | bhadravali  | 84567   |
+| s04       | neharu              | mysore     | nagara      | 34568   |
++-----------+---------------------+------------+-------------+---------+
+
+select * from manofmatch;
++----------+---------+
+| playerid | matchid |
++----------+---------+
+| p01      | s02     |
+| p02      | s03     |
++----------+---------+
+
+
+
+
+
+
+1.select plyaername,teamname,age 
+from player p,team t
+where p.playerid=t.teamid and age=(select min(age) from player;
+
+
+2 select * from stadium where  stadiumid  in( select stadiumid from match1  group by stadiumid  order by count(stadiumid) ) limit 1
+
+
+3. select * from player 
+ where playerid 
+  in(select playerid from 
+  manofmatch where playerid not in 
+  (select caption from team)
+   group by playerid having count(playerid)>=2);
+ 
+  4.  select * from team where teamid in(  select winnerid from match1
+ group by winnerid 
+ order by count(winnerid))limit 1;
+ 
+ 
+ 5. select * from team where teamid in(select winnerid from match1 group by winnerid having count(*) in (select  count(winnerid) from match1 group by winnerid));
+ 
+    
+ 
+ 

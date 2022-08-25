@@ -1,0 +1,164 @@
+
+
+create table tourist_place( 
+pid varchar(20) primary key,
+pname varchar(20),
+state varchar(20),
+distance varchar(2),
+history varchar(20)
+);
+
+
+insert into  tourist_place  values('p01', 'Manali','Himachal Pradesh','45','hill station');
+insert into  tourist_place  values('p02', 'madhuru','kerala','36','temple');
+
+insert into  tourist_place  values('p03', 'eco beach','karnakata','203','beautiful beach');
+
+insert into  tourist_place  values('p04', 'muredushwara','karnakata','67','temple');
+
+insert into  tourist_place  values('p05', 'palace','karnataka','56','palace');
+
+
+
+create table tourist(
+tid varchar(20) primary key,
+tname varchar(20),
+country varchar(20),
+age varchar(20) 
+);
+
+mysql> desc tourist;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| tid     | varchar(20) | NO   | PRI | NULL    |       |
+| tname   | varchar(20) | YES  |     | NULL    |       |
+| country | varchar(20) | YES  |     | NULL    |       |
+| age     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+insert into tourist values('t01','abhunandhan','india','25');
+insert into tourist values('t02','machical','us','45');
+insert into tourist values('t03','sanjana','india','67');
+insert into tourist values('t04','raj','astralia','43');
+insert into tourist values('t05','varun','us','56');
+
+
+
+insert into visits values(&tid,&pid,&vdate);
+
+create table visits(
+tid varchar(20),
+pid varchar(20),
+vdate date,
+foreign key (tid) references tourist(tid),
+foreign key(pid) references tourist_place(pid)
+);
+
+
+mysql> desc tourist_place;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| pid      | varchar(20) | NO   | PRI | NULL    |       |
+| pname    | varchar(20) | YES  |     | NULL    |       |
+| state    | varchar(20) | YES  |     | NULL    |       |
+| distance | varchar(2)  | YES  |     | NULL    |       |
+| history  | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> vdesc visits;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'vdesc visits' at line 1
+mysql> vdesc visit;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'vdesc visit' at line 1
+mysql> desc visit;
+ERROR 1146 (42S02): Table 'VP21MC013_tourist.visit' doesn't exist
+mysql> desc visits;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| tid   | varchar(20) | YES  | MUL | NULL    |       |
+| pid   | varchar(20) | YES  | MUL | NULL    |       |
+| vdate | date        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> desc email;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| tid   | varchar(20) | NO   | PRI | NULL    |       |
+| email | varchar(20) | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+insert into visits values('t01','p02', '2022-8-9');
+insert into visits values('t03','p01', '2022-9-5');
+insert into visits values('t01','p03', '2021-8-15');
+insert into visits values('t02','p02', '2020-5-19');
+insert into visits values('t04','p04', '2022-4-21');
+
+
+
+create table email (
+tid varchar(20)references tourist(tid),
+email varchar(20),
+primary key(tid,email));
+
+
+insert into email values('t01','anjali234@gmail.com');
+insert into email values('t02','hiii234@gmail.com');
+insert into email values('t03','helooo234@gmail.com');
+
+mysql> select * from tourist;
++-----+-------------+----------+------+
+| tid | tname       | country  | age  |
++-----+-------------+----------+------+
+| t01 | abhunandhan | india    | 25   |
+| t02 | machical    | us       | 45   |
+| t03 | sanjana     | india    | 67   |
+| t04 | raj         | astralia | 43   |
+| t05 | varun       | us       | 56   |
++-----+-------------+----------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from tourist_place;
++-----+--------------+------------------+----------+--------------+
+| pid | pname        | state            | distance | history      |
++-----+--------------+------------------+----------+--------------+
+| p01 | Manali       | Himachal Pradesh | 45       | hill station |
+| p02 | madhuru      | kerala           | 36       | temple       |
+| p04 | muredushwara | karnakata        | 67       | temple       |
+| p05 | palace       | karnataka        | 56       | palace       |
++-----+--------------+------------------+----------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from visits;
++------+------+------------+
+| tid  | pid  | vdate      |
++------+------+------------+
+| t01  | p02  | 2022-08-09 |
+| t03  | p01  | 2022-09-05 |
+| t02  | p02  | 2020-05-19 |
+| t04  | p04  | 2022-04-21 |
++------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from email;
++-----+---------------------+
+| tid | email               |
++-----+---------------------+
+| t01 | anjali234@gmail.com |
+| t02 | hiii234@gmail.com   |
+| t03 | helooo234@gmail.com |
++-----+---------------------+
+3 rows in set (0.00 sec)
+
+
+
+
+

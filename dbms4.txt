@@ -1,0 +1,216 @@
+create table place(
+pid varchar(30) primary key,
+pname varchar(30),
+state varchar(30),
+history varchar(30),
+distance int(4));
+
+
+mysql> desc place;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| pid      | varchar(30) | NO   | PRI | NULL    |       |
+| pname    | varchar(30) | YES  |     | NULL    |       |
+| state    | varchar(30) | YES  |     | NULL    |       |
+| history  | varchar(30) | YES  |     | NULL    |       |
+| distance | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.04 sec)
+
+
+
+insert into place values('p101','amer fort,jaipur','rajasthan','the pink city',200);
+insert into place values('p102','udaipur','rajasthan','the city of lakes',220);
+insert into place values('p104','munnar','kerala','tea gardens',100);
+insert into place values('p101','agra','uttar pradesh','the city of taj mahal',330);
+insert into place values('p102','mysore','karnataka','the palace',455);
+insert into place values('p103','malpe','karnataka','beach',200);
+insert into place values('p107','gookarna','karnataka','temple',200);
+
+
+
+
+
+mysql> select * from place;
++------+------------------+-------------------+------------------------+----------+
+| pid  | pname            | state             | history                | distance |
++------+------------------+-------------------+------------------------+----------+
+| p101 | amer fort,jaipur | rajasthan         | the pink city          |      200 |
+| p102 | udaipur          | rajasthan         | the city of lakes      |      220 |
+| p103 | varanasi         | uttar pradesh     | the spiritual of india |      400 |
+| p104 | agra             | uttar pradesh     | the city of taj mahal  |      330 |
+| p105 | mysore           | karnataka         | the palace             |      455 |
+| p106 | malpe            | karnataka         | beach                  |      200 |
+| p107 | gookarna         | karnataka         | temple                 |      200 |
+| p108 | munnar           | kerala            | tea gardens            |      100 |
+| p109 | darjeeling       | west bengal       | queen of the himalayas |      200 |
+| p110 | manali           | himachaal pradesh | waterfall              |      200 |
+| p111 | coorg            | karnataka         | the scotland of india  |      200 |
++------+------------------+-------------------+------------------------+----------+
+11 rows in set (0.00 sec)
+
+
+create table tourist(
+tid varchar(30) primary key,
+tname varchar(30),
+age int(3),
+country varchar(30));
+
+mysql> desc tourist;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| tid     | varchar(30) | NO   | PRI | NULL    |       |
+| tname   | varchar(30) | YES  |     | NULL    |       |
+| age     | int         | YES  |     | NULL    |       |
+| country | varchar(30) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+insert into tourist values('t101','jagan',25,'us');
+insert into tourist values('t102','anjana',28,'india');
+insert into tourist values('t103','yajan',31,'india');
+insert into tourist values('t104','suma',25,'uk');
+insert into tourist values('t105','jeevan',35,'india');
+insert into tourist values('t106','subhash',23,'us');
+
+
+mysql> select * from tourist;
++------+---------+------+---------+
+| tid  | tname   | age  | country |
++------+---------+------+---------+
+| t101 | jagan   |   25 | us      |
+| t102 | anjana  |   28 | india   |
+| t103 | yajan   |   31 | india   |
+| t104 | suma    |   25 | uk      |
+| t105 | jeevan  |   35 | india   |
+| t106 | subhash |   23 | us      |
++------+---------+------+---------+
+6 rows in set (0.00 sec)
+
+
+
+create table email(
+tid varchar(30),
+email_id varchar(30),
+primary key(tid,email_id),
+foreign key(tid) references tourist(tid));
+
+
+
+insert into email values('t101','jagansoorya123@gmail.com');
+insert into email values('t102','anjana453@gmail.com');
+insert into email values('t103','yajanraj345@gmail.com');
+insert into email values('t104','sumaranganath234@gmail.com');
+insert into email values('t105','jeevanraj900@gmail.com');
+insert into email values('t106','sudhash456@gmail.com');
+mysql> select * from email;
++------+----------------------------+
+| tid  | email_id                   |
++------+----------------------------+
+| t101 | jagansoorya123@gmail.com   |
+| t102 | anjana453@gmail.com        |
+| t103 | yajanraj345@gmail.com      |
+| t104 | sumaranganath234@gmail.com |
+| t105 | jeevanraj900@gmail.com     |
+| t106 | sudhash456@gmail.com       |
++------+----------------------------+
+6 rows in set (0.00 sec);
+
+
+
+
+create table visits(
+tid varchar(30),
+pid varchar(30),
+primary key(tid,pid),foreign key (pid) references place(pid),
+foreign key (tid) references tourist(tid),
+vdate date);
+
+mysql> desc visits;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| tid   | varchar(30) | NO   | PRI | NULL    |       |
+| pid   | varchar(30) | NO   | PRI | NULL    |       |
+| vdate | date        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+insert into visits values('t101','p101','2022-03-3');
+insert into visits values('t101','p102','2022-05-3');
+insert into visits values('t102','p101','2022-04-31');
+insert into visits values('t103','p101','2021-03-23');
+insert into visits values('t104','p103','2022-08-13');
+insert into visits values('t101','p103','2022-06-6');
+insert into visits values('t101','p104','2022-07-6');
+
+
+insert into visits values('t105','p104','2022-07-6');
+
+insert into visits values('t101','p107','2022-07-6');
+
+insert into visits values('t104','p102','2021-09-24');
+
+
+
+i) select state, count(pid) as places 
+from place 
+group by state
+order by count(pid)
+desc limit 1;
+
+
++-----------+--------+
+| state     | places |
++-----------+--------+
+| karnataka |      4 |
++-----------+--------+
+1 row in set (0.01 sec)
+
+
+2)
+select p.pid,p.pname,p.state,count(v.tid)
+from place p,visits v
+where v.pid=p.pid 
+group by v.pid 
+order by count(v.pid) desc limit 1;
+
++------+----------+---------------+--------------+
+| pid  | pname    | state         | count(v.tid) |
++------+----------+---------------+--------------+
+| p103 | varanasi | uttar pradesh |            2 |
++------+----------+---------------+--------------+
+1 row in set (0.01 sec)
+
+3) select *
+from tourist
+where tid in( select tid from visits,place 
+              where visits.pid=place.pid and state='karnataka');
+
+
++------+-------+------+---------+
+| tid  | tname | age  | country |
++------+-------+------+---------+
+| t101 | jagan |   25 | us      |
+| t104 | suma  |   25 | uk      |
++------+-------+------+---------+
+2 rows in set (0.00 sec)
+
+
+4) 
+select * 
+from tourist 
+where tid in( select tid from visits,place 
+where visits.tid=place.pid 
+group by tid
+ having count(distinct state) in (select count(distinct state) from place));
+
+5) select * 
+from place 
+where pid in(select pid from visits,tourist 
+              where  visits.tid=tourist.tid 
+             group by pid
+            having count( distinct country)=(select count(distinct country) from tourist));

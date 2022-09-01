@@ -1,0 +1,70 @@
+
+create table const(
+cont_id varchar(30) primary key,
+name varchar(30),
+cstate varchar(30),
+noofvotes varchar(30)
+);
+
+
+insert into const values ('c101','dk','karnataka','2000');
+insert into const values('c102','udupi','karnataka','2240');
+insert into const values('c103','eluru','andrapradesh','2000');
+insert into const values('c104','mubai','maharastra','3000');
+
+
+create table votes(
+vid varchar(30) primary key,
+vname varchar(30),
+vage varchar(30),
+addr varchar(30),
+cond_id varchar(30),
+cond_id varchar(30),
+foreign key (const_id) referecnes const(cont_id),
+foreign key (cond_id) references condidate(cond_id)
+);
+
+
+
+
+create table candidate(
+cand_id varchar(30) primary key,
+cname varchar(30) ,
+phone int(10),
+age varchar(30),
+state varchar(30),
+pid varchar(30),
+foreign key (pid) references party (pid)
+);
+ alter table candidate modify phone varchar(20);
+insert into candidate values('c201','arjun','8976567312','34','karnataka','p101');
+insert into candidate values('c202','abhi','7654346610','45','andrapradesh','p102');
+insert into candidate values('c203','yogitha','6789543456','32','karnataka','p103');
+insert into candidate values('c204','sumana','9976567312','34','karnataka','p104');
+
+create table party (
+pid varchar(30) primary key,
+pname varchar(30),
+psymbol varchar(30)
+);
+
+insert into party values('p101','bjp','lotus');
+insert into party values('p102','Office Heroes','sun flower');
+insert into party values('p103','Meteors','pen');
+insert into party values('p104','Patriots','porrot');
+
+create table contest (
+cont_id varchar(30),
+cand_id varchar(30),
+primary key(cont_id,cand_id),
+foreign key (cont_id) references const(cont_id),
+foreign key (cand_id) references candidate(cand_id)
+);
+
+
+insert into contest values('c101','c201');
+insert into contest values('c101','c202');
+insert into  contest values('c103','c203');
+insert into contest values('c102','c204');
+
+

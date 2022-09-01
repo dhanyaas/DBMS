@@ -204,7 +204,7 @@ where tid in( select tid from visits,place
 select * 
 from tourist 
 where tid in( select tid from visits,place 
-where visits.tid=place.pid 
+where visits.pid=place.pid 
 group by tid
  having count(distinct state) in (select count(distinct state) from place));
 
